@@ -12,7 +12,6 @@ class RegistrationFormView(FormView):
     template_name = 'users/registration/registration.html'
     form_class = UserForm
     success_url = ''
-
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
