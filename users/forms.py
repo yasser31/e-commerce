@@ -1,6 +1,5 @@
 from django import forms
 from .models import User
-from ecom.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
 
 
@@ -22,26 +21,8 @@ class UserForm(forms.ModelForm):
         user.phone = phone
         user.address = address
         user.save()
+        return user
     
-    def send_email_confirmation(self):
-        confirmation_link = None
-        username = self.cleaned_data["username"]
-        email = self.cleaned_data["email"]
-        message = f"""Hello {username}, Thank you for joining our website.
-
-                  We would like to confirm that your account was created successfully. 
-                  To access [customer portal] click the link below.
-                  {confirmation_link}
-                  If you experience any issues logging into your account, reach out to us at {EMAIL_HOST_USER}.
-                  Best regards
-                  The [customer portal] team
-        """
-        send_mail(
-            subject="Account registration confirmation",
-            message=message,
-            from_email=EMAIL_HOST_USER,
-            recipient_list=[email]
-        )
 
 class LoginForm(forms.Form):
     username = forms.CharField(label="username", max_length=256, required=True)
