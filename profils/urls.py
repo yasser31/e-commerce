@@ -6,8 +6,12 @@ app_name = "profils"
 
 urlpatterns = [
 
-    path("edit/",
-         views.ProfilEditView.as_view(), name="edit_profil'"),
+    path("edit/user-infromation",
+         views.UserEditView.as_view(), name="edit_user_information"),
+    path("edit/profil-photo",
+         views.ProfilPhotoEditView.as_view(), name="edit_profil_photo"),
+    path("edit/profil-infromation",
+         views.ProfilEditView.as_view(), name="edit_user_information"),
     path("accounts/password_change",
          auth_views.PasswordChangeView.as_view(template_name="profils/password_change.html", 
          success_url=reverse_lazy("profils:password_change_complete")), name="password_change'"),
