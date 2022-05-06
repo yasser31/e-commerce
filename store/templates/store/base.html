@@ -44,7 +44,8 @@
 		<div class="container">
 			<div id="welcomeLine" class="row">
 				<div class="span6">Welcome! {% if request.user.is_authenticated %}<strong>{{
-						request.get_username }}</strong>  {% else %}<strong> don't forget to login or register </strong> {% endif %}</div>
+						request.get_username }}</strong> {% else %}<strong> don't forget to login or register </strong>
+					{% endif %}</div>
 				<div class="span6">
 					<div class="pull-right">
 						<a href="product_summary.html"><span class="">Fr</span></a>
@@ -115,8 +116,9 @@
 										</div>
 										<button type="submit" class="btn btn-success">Sign in</button>
 									</form>
-									<a href="{% url 'users:registration' %}" role="button" data-toggle="modal" style="padding-right:0"><span
-										class="btn btn-large btn-success">Register</span></a>
+									<a href="{% url 'users:registration' %}" role="button" data-toggle="modal"
+										style="padding-right:0"><span
+											class="btn btn-large btn-success">Register</span></a>
 								</div>
 							</div>
 						</li>
@@ -208,6 +210,14 @@
 	{% block registration %}
 	{% endblock%}
 	{% block login %}
+	{% endblock %}
+	{% block password_reset %}
+	{% endblock %}
+	{% block password_reset_done %}
+	{% endblock %}
+	{% block password_reset_confirm %}
+	{% endblock %}
+	{% block password_reset_complete %}
 	{% endblock %}
 	<!-- Footer ================================================================== -->
 	<div id="footerSection">

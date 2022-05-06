@@ -23,9 +23,10 @@ urlpatterns = [
     path('', include('store.urls')),
     path('products/', include('products.urls')),
     path('publications/', include('publication.urls')),
-    path('users/', include('users.urls'), name='users'),
+    path('users/', include('users.urls')),
     path('sales/', include('sales.urls')),
     path('payments/', include('payements.urls')),
     path('orders/', include('orders.urls')),
-    path('carts/', include('carts.urls'))
+    path('carts/', include('carts.urls')),
+    path('profils/', include('profils.urls'))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

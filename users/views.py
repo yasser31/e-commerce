@@ -14,8 +14,6 @@ from ecom.settings import EMAIL_HOST_USER
 from django.db import transaction
 
 
-def users(request):
-    return render(request, "users/users.html")
 
 class RegistrationView(CreateView):
     template_name = 'users/registration/registration.html'
@@ -28,7 +26,7 @@ class RegistrationView(CreateView):
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
-        super().form_valid(form)
+        response = super().form_valid(form)
         current_site = get_current_site(self.request)
         subject = 'Activate your account.'
         message = render_to_string('users/registration/acc_active_email.html', {
@@ -44,7 +42,7 @@ class RegistrationView(CreateView):
             from_email=EMAIL_HOST_USER,
             recipient_list=[email]
         )
-        return super().form_valid(form)
+        return response
 
     def activate(request, uidb64, token):
         try:
