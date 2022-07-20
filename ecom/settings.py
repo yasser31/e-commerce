@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'carts',
     'profils',
     'phonenumber_field',
-    'crispy_forms'
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [

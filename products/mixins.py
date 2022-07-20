@@ -1,5 +1,5 @@
 from django.db import models
-
+from publication.models import Publication
 
 class CategoryMixin(models.Model):
     category = models.CharField(max_length=255, default="")
@@ -21,7 +21,11 @@ class ProductMixin(models.Model):
     name = models.CharField(max_length=255, default='name')
     sulg = models.SlugField()
     details = models.TextField(blank=True, null=True, default="text")
-    
+    category = models.ForeignKey(
+        'Category', related_name="products", on_delete=models.DO_NOTHING)
+    publication = models.ForeignKey(Publication, related_name="products",
+                                    on_delete=models.CASCADE, null=True, blank=True)
+
 
     class Meta:
         abstract = True
@@ -29,9 +33,4 @@ class ProductMixin(models.Model):
     def __str__(self):
         return self.name
 
-"""
-class ColorMixin(models.Model):
-    color = models.CharField(max_length=265, blank=True, null=True)
 
-    class Meta:
-        abstract = True"""

@@ -1,28 +1,55 @@
 from django.db import models
-from publication.models import Publication
 from io import BytesIO
 from PIL import Image
 from django.core.files import File
 from .mixins import ProductMixin, CategoryMixin
+
 
 class Category(CategoryMixin):
     pass
 
 
 class Product(ProductMixin):
-    category = models.ForeignKey(
-        Category, related_name="products", on_delete=models.DO_NOTHING)
-    publication = models.ForeignKey(Publication, related_name="products",
-                                    on_delete=models.CASCADE, null=True, blank=True)
+    pass
 
+
+class Attribute(models.Model):
+    name = models.CharField(max_length=256, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class ProductVariant(models.Model):
+    name = models.CharField(max_length=256, default="")
+    product = models.ForeignKey(Product, related_name="variants",
+                                on_delete=models.CASCADE)
+    attributes = models.ManyToManyField(
+        Attribute, related_name="product_variants", through="AttributeValue")
+    price = models.IntegerField(null=True, blank=True)
+    quantity = models.IntegerField()
+
+    def __str__(self):
+        return self.name
+
+
+class AttributeValue(models.Model):
+    value = models.CharField(max_length=256)
+    attribute = models.ForeignKey(Attribute, related_name="values",
+                                  on_delete=models.CASCADE)
+    product_variant = models.ForeignKey(ProductVariant, related_name="values",
+                                  on_delete=models.DO_NOTHING, null=True, blank=True)
+    
+    def __str__(self):
+        return self.value
 
 
 class Image(models.Model):
 
     image = models.ImageField(upload_to="uploads/", blank=True, null=True)
     thumbnail = models.ImageField(upload_to='uploads/', blank=True, null=True)
-    product = models.ForeignKey(Product, related_name="images",
-                                on_delete=models.DO_NOTHING, null=True, blank=True)
+    product = models.ForeignKey(ProductVariant, related_name="images",
+                                on_delete=models.CASCADE, null=True, blank=True)
 
     def get_image(self):
         if self.image:

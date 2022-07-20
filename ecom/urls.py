@@ -28,5 +28,5 @@ urlpatterns = [
     path('payments/', include('payements.urls')),
     path('orders/', include('orders.urls')),
     path('carts/', include('carts.urls')),
-    path('profils/', include('profils.urls'))
+    path('profils/', include('profils.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
