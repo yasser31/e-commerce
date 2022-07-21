@@ -15,17 +15,18 @@ class Product(ProductMixin):
 
 class Attribute(models.Model):
     name = models.CharField(max_length=256, unique=True)
-
+    product_variants = models.ManyToManyField(
+        'ProductVariant', related_name="attributes")
     def __str__(self):
         return self.name
 
 
 class ProductVariant(models.Model):
     name = models.CharField(max_length=256, default="")
+    sku = models.CharField(max_length=256, default="")
     product = models.ForeignKey(Product, related_name="variants",
                                 on_delete=models.CASCADE)
-    attributes = models.ManyToManyField(
-        Attribute, related_name="product_variants", through="AttributeValue")
+    
     price = models.IntegerField(null=True, blank=True)
     quantity = models.IntegerField()
 
@@ -37,9 +38,9 @@ class AttributeValue(models.Model):
     value = models.CharField(max_length=256)
     attribute = models.ForeignKey(Attribute, related_name="values",
                                   on_delete=models.CASCADE)
-    product_variant = models.ForeignKey(ProductVariant, related_name="values",
-                                  on_delete=models.DO_NOTHING, null=True, blank=True)
-    
+    product_variant = models.ManyToManyField(ProductVariant, related_name="attr_values",
+                                             blank=True)
+
     def __str__(self):
         return self.value
 

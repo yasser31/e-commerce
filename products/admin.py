@@ -21,6 +21,7 @@ class ProductVariantAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Product)
+admin.site.register(AttributeValue)
 admin.site.register(ProductVariant, ProductVariantAdmin)
 admin.site.register(Image)
 admin.site.register(Category)
